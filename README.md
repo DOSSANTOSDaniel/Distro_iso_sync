@@ -31,6 +31,8 @@ Every 1.0s: du -h $HOME/Isos/*
 ## Afficher les logs
 ```
 cat /var/log/syslog | grep 'distro_iso_sync'
+
+journalctl
 ```
 ## Reste à faire
 - [ ] Détecter les images ISO's trop anciennes et les supprimer.
