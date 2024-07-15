@@ -12,6 +12,7 @@ C'est un script non interactif,il permet :
 ```Bash
 watch -n 1 -d 'du -h $HOME/Isos/*'
 ```
+
 ```
 Every 1.0s: du -h $HOME/Isos/*
 11G     Isos/AlmaLinux-9-latest-x86_64-dvd.iso
@@ -28,4 +29,4 @@ Every 1.0s: du -h $HOME/Isos/*
 2.6G    Isos/ubuntu-24.04-live-server-amd64.iso
 ```
 ## Reste à faire
-- [] Détecter les images ISO's trop anciennes et les supprimer.
+- [ ] Détecter les images ISO's trop anciennes et les supprimer.
