@@ -28,5 +28,9 @@ Every 1.0s: du -h $HOME/Isos/*
 5.7G    Isos/ubuntu-24.04-desktop-amd64.iso
 2.6G    Isos/ubuntu-24.04-live-server-amd64.iso
 ```
+## Afficher les logs
+```
+cat /var/log/syslog | grep 'distro_iso_sync'
+```
 ## Reste à faire
 - [ ] Détecter les images ISO's trop anciennes et les supprimer.
