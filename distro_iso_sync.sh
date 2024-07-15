@@ -224,21 +224,3 @@ if [ -f "$init_sum" ] && [ -f "$final_sum" ]; then
   rm -rf "$init_sum"
   message_log "$output_download"
 fi
-
-# Notifications avec NTFY
-secrets_ntfy="$HOME/.secrets/ntfy"
-
-temp_token="$(awk -F: '/token/ {print $2}' "$secrets_ntfy")"
-tortue_topic="$(awk -F: '/topic/ {print $2}' "$secrets_ntfy")"
-
-curl "https://noti.dsjdf.fr/$tortue_topic" \
-  -H "Authorization: Bearer $temp_token" \
-  -H "Title: Download isos" \
-  -H "Priority: default" \
-  -H "Tags: cd" \
-  -H "Icon: https://icons.iconarchive.com/icons/delacro/fip/128/File-iso-icon.png" \
-  -d "
-==========================
-$msg_logs
-==========================
-"
