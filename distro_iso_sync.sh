@@ -163,8 +163,7 @@ for distro in "${!distros[@]}"; do
     url="$(dirname "$url")"
   fi
   url_response="$(curl -o /dev/null -s -w "%{http_code}\n" "$url")"
-
-  if [[ $url_response -eq '200' ]] || [[ $url_response -eq '301' ]]; then
+  if [[ $url_response =~ ^(200|301|302)$ ]]; then
     if [ -n "$latest_iso" ]; then
       # Description des options de wget
       # --continue : Permet de reprendre le téléchargement là ou il a été interrompu.
