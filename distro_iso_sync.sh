@@ -6,15 +6,16 @@
 # Author:  'dossantosjdf@gmail.com'
 #
 # Date: 15/07/2024
+# Modif: 05/09/2024
 # Version: 1.0
 # Bash_Version: 5.1.16
 #--------------------------------------------------#
 # Description:
 #
-# C'est un script non interactif,il permet : 
-# - Télécharger les images ISOs des principales distributions Linux. 
+# Script non interactif, il permet : 
+# - Télécharger les images ISOs des principales distributions Linux et FreeBSD. 
 # - Tester et valider l'accessibilité au site de téléchargement de la distribution.
-# - Mettre à jour quand une nouvelle image ISO est disponible.
+# - Mettre à jour quand une nouvelle image ISO est disponible sur le serveur distant.
 # - La mise en place de la journalisation des erreurs.
 #
 
@@ -58,10 +59,10 @@ freebsd_regex='(?<=href=")FreeBSD\-[0-9]*\.[0-9]*\-RELEASE\-amd64\-dvd1\.iso(?="
 # Ubuntu Server
 ubuntusrv_ver="$(curl -s -L https://releases.ubuntu.com/ | grep -oP '(?<=href=")[0-9]*\.[0-9]*(?=/">)' | sort -Vr | head -1)"
 ubuntusrv_url="https://releases.ubuntu.com/${ubuntusrv_ver}"
-ubuntusrv_regex='(?<=href=")ubuntu\-[0-9]*\.[0-9]*\-live\-server\-amd64\.iso(?=">)'
+ubuntusrv_regex='(?<=href=")ubuntu\-[0-9]*(\.*[0-9]*){2}\-live\-server\-amd64\.iso(?=">)'
 
 # Ubuntu
-ubuntu_regex='(?<=href=")ubuntu\-[0-9]*\.[0-9]*\-desktop\-amd64\.iso(?=">)'
+ubuntu_regex='(?<=href=")ubuntu\-[0-9]*(\.*[0-9]*){2}\-desktop\-amd64\.iso(?=">)'
 ubuntu_url="$ubuntusrv_url"
 
 # OpenSUSE
@@ -136,7 +137,6 @@ message_log() {
   message="$1"
 
   logger -t "$script_name" "$message !"
-  msg_logs+="$message"
 }
 
 # Main
@@ -163,7 +163,7 @@ for distro in "${!distros[@]}"; do
     url="$(dirname "$url")"
   fi
   url_response="$(curl -o /dev/null -s -w "%{http_code}\n" "$url")"
-  if [[ $url_response =~ ^(200|301|302)$ ]]; then
+if [[ $url_response =~ ^(200|301|302)$ ]]; then
     if [ -n "$latest_iso" ]; then
       # Description des options de wget
       # --continue : Permet de reprendre le téléchargement là ou il a été interrompu.
